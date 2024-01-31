@@ -1,0 +1,235 @@
+			NODE JS
+			-------
+-used for developing SERVER SIDE APPLICATIONS.
+-uses V8 ENGINE developed by Google.
+-developed in JS.
+-NON BLOCKING event driven way.
+-provides asynchronous functionality more.
+-Faster performance.
+
+#ARCHITECTURE
+-------------
+-single threaded way.
+-for any IO task it takes use of WORKER THREAD in the background.
+-No. of concurent request are more.
+ie always ready to accept request from client.
+
+#suitable for(use case):
+--------------
+-web app which doesnt need heavy processing.
+ex: chatting apps.
+-web app that needs unstructured or semistructured db
+=>MONGO DB
+
+#not supports:
+--------------
+1)document and windows objects.
+2)alert,prompt,confirm.
+
+#global variable present:
+-------------------------
+1)__filename->file path of server side application.
+2)__dirname->dir path
+
+#global functions:
+------------------
+1)setTimeout()->called only once.
+2)setInterval()->called repeatetively.
+3)parseInt()
+4)parseFloat()
+5)number()
+6)String()
+
+#global objects:
+----------------
+1)process
+2)exports
+
+			NODE MODULES
+			------------
+-modules are a fundamental concept that allows you to organize your code into reusable and maintainable pieces. Modules help you encapsulate functionality, making it easier to manage dependencies, share code, and structure your application.
+
+-needs to be REQUIRED.
+	require(' m ')
+	m->module name
+-in module definition everything is LOCAL{accessible within the module only} by Default.
+
+
+#Types of Modules:
+------------------
+1)Core Module
+2)Custom Module
+3)Third party modules
+
+
+I)Core Module:
+--------------
+-available by default in the Node js installation.
+
+A)http
+------
+-helps in developing WEB SERVERS.
+-createServer() function.
+this function needs another function as callback function which accepts 2 objects->Request and Response.
+
+ex:
+---
+var h=require('http')
+var server=h.createServer(function(req,res)=>{})
+
+B)url
+-----
+-stands for uniform resource locator
+-helps in reading from request url.
+-provides function ->parse(1,2)
+	1->string to be parsed,request url send by client
+	2->encoded or not 
+		true->first decoded then parsed
+		false->String is not encoded
+-Browser sends data to server.
+-takes help of http module.
+
+ex:
+---
+const url = require('url');
+const urlString = 'https://www.example.com/path?name=John&age=25';
+const parsedUrl = url.parse(urlString, true);
+
+console.log(parsedUrl);
+
+C)fs
+----
+-stands for file system
+-provides functionality for reading,writting,appending data within the file.
+-provides 2 types of functions
+	1)Asynchronous fn ->(non-blocking)
+	2)Synchronous  fn -> (blocking) 
+
+1)Asynchronous (Async) File System Operations:
+----------------------------------------------
+-will not wait for other tasks to complete.
+a)Reading a File:
+-----------------
+Async Method: fs.readFile()
+
+const fs = require('fs');
+
+fs.readFile('file.txt', (err, data) => {
+    if (err) {
+        console.error(err);
+        return;
+    }
+    console.log(data);
+});
+
+b)Writing to a File:
+------------------
+Async Method: fs.writeFile(file, callback)
+
+const fs = require('fs');
+
+fs.writeFile('newFile.txt', 'Hello, Node.js!', (err) => {
+    if (err) {
+        console.error(err);
+        return;
+    }
+    console.log('File written successfully.');
+});
+
+c)Checking if a File or Directory Exists:
+-----------------------------------------
+Async Method: fs.access(path, mode, callback)
+
+const fs = require('fs');
+
+fs.access('file.txt', fs.constants.F_OK, (err) => {
+    if (err) {
+        console.error('File does not exist.');
+        return;
+    }
+    console.log('File exists.');
+});
+
+d)appending:
+------------
+const fs = require('fs');
+
+const filePath = 'example.txt';
+const dataToAppend = 'This data will be appended.';
+
+// Async appendFile operation
+fs.appendFile(filePath, dataToAppend, (err) => {
+    if (err) {
+        console.error(err);
+        return;
+    }
+    console.log('Data appended to file successfully.');
+});
+
+
+2)Synchronous (Sync) File System Operations:
+--------------------------------------------
+-will wait for other tasks to complete first.
+
+a)Reading a File:
+-----------------
+Sync Method: fs.readFileSync(path)
+javascript
+Copy code
+const fs = require('fs');
+
+try {
+    const data = fs.readFileSync('file.txt');
+    console.log(data);
+} catch (err) {
+    console.error(err);
+}
+
+b)Writing to a File:
+--------------------
+Sync Method: fs.writeFileSync(file, data)
+
+const fs = require('fs');
+
+try {
+    fs.writeFileSync('newFile.txt', 'Hello, Node.js!');
+    console.log('File written successfully.');
+} catch (err) {
+    console.error(err);
+}
+
+c)Checking if a File or Directory Exists:
+-----------------------------------------
+Sync Method: fs.existsSync(path)
+
+const fs = require('fs');
+
+if (fs.existsSync('file.txt')) {
+    console.log('File exists.');
+} else {
+    console.error('File does not exist.');
+}
+
+II)Custom Modules:
+------------------
+-programmer needs to develop custom modules.
+-use this in Node application.
+-You can create your own modules to organize your code into separate files. Each file can represent a module, and you can export functions, variables, or objects from one module to be used in another.
+
+ex:
+---
+// math.js - User-defined module
+module.exports.add = function (a, b) {
+    return a + b;
+};
+
+// app.js - Main application
+const math = require('./math'); // Importing the user-defined module
+console.log(math.add(2, 3)); // Outputs 5
+
+
+III)Third Party Modules:
+------------------------
+-not avilable in Node application
+-install these modules by using npm(node package manager) utility.
+-Express JS.
